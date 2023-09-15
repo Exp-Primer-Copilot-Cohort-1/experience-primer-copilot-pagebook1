@@ -1,18 +1,19 @@
-// Create a webserver
-// Listen for a GET request on the path /comments
-// Send back a response with a status code of 200 and the following JSON object as the body: { comments: [] }
-// Listen for a POST request on the path /comments
-// Send back a response with a status code of 201 and an empty body
+// Create a web server
 
-const express = require("express");
-const app = express();
+// Import module
+const express = require('express');
+const router = express.Router();
+const commentController = require('../controllers/commentController');
 
-app.get("/comments", (req, res) => {
-  res.status(200).json({ comments: [] });
-});
+// Handle request and response
+router.get('/', commentController.comment_list);
+router.get('/create', commentController.comment_create_get);
+router.post('/create', commentController.comment_create_post);
+router.get('/:id/delete', commentController.comment_delete_get);
+router.post('/:id/delete', commentController.comment_delete_post);
+router.get('/:id/update', commentController.comment_update_get);
+router.post('/:id/update', commentController.comment_update_post);
+router.get('/:id', commentController.comment_detail);
 
-app.post("/comments", (req, res) => {
-  res.status(201).send();
-});
-
-app.listen(8080);
+// Export module
+module.exports = router;
